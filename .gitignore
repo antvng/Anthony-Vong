@@ -18,4 +18,5 @@ airflow/logs/
 
 # dbt
 dbt/target/
-dbt/dbt_packages/
+dbt/dbt_packages/logs/
+config/
