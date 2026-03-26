@@ -1,0 +1,21 @@
+# Credentials 
+.env
+*.key
+credentials.json
+dbt/profiles.yml
+
+# Python
+__pycache__/
+.venv/
+*.pyc
+*.egg-info/
+
+# Mac
+.DS_Store
+
+# Airflow
+airflow/logs/
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
