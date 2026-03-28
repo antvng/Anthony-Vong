@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: stg_eco2mix_national
+    description: "Données nationales éco2mix nettoyées et typées (Bronze → Silver)"
+    columns:
+      - name: date_heure
+        description: "Horodatage de la mesure au pas 30 min"
+        data_tests:
+          - not_null
+          - unique
+
+      - name: consommation_mw
+        description: "Consommation électrique nationale en MW"
+        data_tests:
+          - not_null
+
+      - name: taux_co2
+        description: "Taux de CO2 du mix électrique en gCO2/kWh"
+        data_tests:
+          - not_null

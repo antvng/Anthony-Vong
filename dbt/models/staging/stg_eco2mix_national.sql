@@ -56,6 +56,13 @@ final as (
     and consommation_mw is not null
     and consommation_mw > 0
 
+    -- Dédoublonnage sur les changements d'heure 
+    -- On keep la derniere ligne seulement pour chaque timestamp
+    qualify row_number() over (
+        partition by date_heure
+        order by _loaded_at desc
+    ) = 1
+
 )
 
 select * from final
