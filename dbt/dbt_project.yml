@@ -18,10 +18,10 @@ models:
   electricity_co2:
     staging:
       +materialized: view
-      +schema: STAGING
+      +schema: staging
     intermediate:
       +materialized: view
-      +schema: INTERMEDIATE
+      +schema: intermediate
     marts:
       +materialized: table
-      +schema: MARTS
+      +schema: marts
