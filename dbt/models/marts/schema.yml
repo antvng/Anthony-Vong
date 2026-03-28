@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: mart_national_horaire
+    description: "Table principale Power BI — monitoring CO2 au pas 30min"
+    columns:
+      - name: date_heure
+        description: "Horodatage unique de la mesure"
+        data_tests:
+          - not_null
+          - unique
+
+      - name: taux_co2
+        description: "Taux CO2 en gCO2/kWh"
+        data_tests:
+          - not_null
+
+      - name: indice_vert
+        description: "Signal CO2 actionnable Vert/Orange/Rouge"
+        data_tests:
+          - not_null
+          - accepted_values:
+              config:
+                severity: error
+              values: ['Vert', 'Orange', 'Rouge']
+
+      - name: consommation_mw
+        description: "Consommation nationale en MW"
+        data_tests:
+          - not_null
