@@ -1,0 +1,66 @@
+name: dbt CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dbt/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'dbt/**'
+
+jobs:
+  dbt-ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dbt-snowflake
+        run: pip install dbt-snowflake==1.8.0
+
+      - name: Configure dbt profiles.yml
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          mkdir -p ~/.dbt
+          cat > ~/.dbt/profiles.yml << PROFILE
+          electricity_co2:
+            target: ci
+            outputs:
+              ci:
+                type: snowflake
+                account: "${SNOWFLAKE_ACCOUNT}"
+                user: "${SNOWFLAKE_USER}"
+                password: "${SNOWFLAKE_PASSWORD}"
+                role: ACCOUNTADMIN
+                database: ELECTRICITY_DBT
+                warehouse: COMPUTE_WH
+                schema: "dbt_ci_${RUN_ID}"
+                threads: 4
+          PROFILE
+
+      - name: dbt debug
+        working-directory: dbt
+        run: dbt debug
+
+      - name: dbt build
+        working-directory: dbt
+        run: dbt build
+
+      - name: Cleanup CI schema
+        if: always()
+        working-directory: dbt
+        run: dbt run-operation drop_schema --args "{schema_name: 'dbt_ci_${{ github.run_id }}'}" || true
