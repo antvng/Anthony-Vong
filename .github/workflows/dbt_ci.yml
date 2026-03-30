@@ -65,4 +65,5 @@ jobs:
         env:
           RUN_ID: ${{ github.run_id }}
         working-directory: dbt
-        run: dbt run-operation drop_schema --args "{schema_name: dbt_ci_${RUN_ID}}" || true
+        run: |
+          dbt run-operation drop_schema --args "{schema_name: dbt_ci_${RUN_ID}}" || true
