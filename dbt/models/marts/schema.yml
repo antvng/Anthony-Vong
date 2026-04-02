@@ -79,9 +79,9 @@ models:
         data_tests:
           - not_null
 
-      - name: mart_regional_mensuel
-        description: "Agrégat mensuel par région — alimente la carte choroplèthe Power BI"
-        columns:
+  - name: mart_regional_mensuel
+    description: "Agrégat mensuel par région — alimente la carte choroplèthe Power BI"
+    columns:
       - name: annee
         description: "Année"
         data_tests:
