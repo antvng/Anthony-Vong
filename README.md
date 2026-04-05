@@ -36,15 +36,24 @@ RTE éco2mix API → Airflow (4 DAGs) → Snowflake Bronze → dbt → Power BI
 ## Dashboard Power BI
 
 Page 1 — L'électricité est-elle verte en ce moment ?
+42.52 gCO2/kWh ce soir → Indice Vert
+Ce qui est frappant dans les données annuelles : la France a divisé son CO2 électrique par 3.8 en 10 ans — de 61 gCO2/kWh en 2013 à 17 gCO2/kWh en 2025.
 ![Dashboard Indice Vert](docs/screenshots/Dashboard_1_Indice_Vert.png)
 
 Page 2 — Quand l'électricité est-elle la plus verte ?
+Printemps = la saison la plus verte : 34-37 gCO2/kWh quelle que soit l'heure
+Hiver = la plus carbonée : 48-54 gCO2/kWh
+L'heure compte moins que la saison et la nuit n'est pas toujours verte.
 ![Dashboard Patterns Temporels](docs/screenshots/Dashboard_2_Patterns.png)
 
 Page 3 — Quelle région produit l'électricité la plus verte ?
+Auvergne-Rhône-Alpes #1
+Île-de-France dernière : ne produit presque rien, importe tout du réseau national
+Tendance 2012-2026 : toutes les régions progressent, mais Occitanie et Nouvelle-Aquitaine ont la pente la plus forte
 ![Dashboard Mix Régional](docs/screenshots/Dashboard_3_Regional.png)
 
 Page 4 — À quelle heure charger sa voiture électrique ?
+13h est systématiquement la meilleure heure dans 3 saisons sur 4 — c'est le pic solaire qui tire le CO2 vers le bas. En hiver le soleil est trop faible pour faire la différence, donc le gain est plus modeste.
 ![Dashboard Guide Pratique](docs/screenshots/Dashboard_4_Guide_Zoe.png)
 
 ---
